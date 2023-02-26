@@ -7,9 +7,10 @@ type PropsType = {
     resetValue: () => void
     setLocalStorage: () => void
     getLocalStorage: () => void
+    clearLocalStorage: () => void
 }
 
-export function  Counter({value, incValue, resetValue, setLocalStorage, getLocalStorage, ...restParams}:PropsType) {
+export function  Counter({value, incValue, resetValue, setLocalStorage, getLocalStorage, clearLocalStorage, ...restParams}:PropsType) {
     return (
         <div className={'counter'}>
             <h1 className={'display' + (value === 5 ? ' max' : '')}>{value}</h1>
@@ -21,6 +22,7 @@ export function  Counter({value, incValue, resetValue, setLocalStorage, getLocal
             <div className={'localStorage'}>
                 <Button className={'button default'} onClick={setLocalStorage}>set to local storage</Button>
                 <Button className={'button default'} onClick={getLocalStorage}>get from local storage</Button>
+                <Button className={'button default'} onClick={clearLocalStorage}>clear local storage</Button>
             </div>
         </div>
     );
