@@ -11,10 +11,19 @@ function App() {
     function resetValue(): void {
         setValue(0)
     }
+    function setLocalStorage() {
+    localStorage.setItem("counterValue", JSON.stringify(value))
+    }
+    function getLocalStorage() {
+        const valueFromStorage = localStorage.getItem("counterValue")
+        if (valueFromStorage) {
+            setValue(JSON.parse(valueFromStorage))
+        }
+    }
 
     return (
         <div className="App">
-            <Counter value={value} incValue={incValue} resetValue={resetValue}/>
+            <Counter value={value} incValue={incValue} resetValue={resetValue} setLocalStorage={setLocalStorage} getLocalStorage={getLocalStorage}/>
         </div>
     );
 }
