@@ -1,33 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import {Counter} from './shared/Counter';
+import {Setupper} from './shared/Setupper';
+
+export type SetupType = {maxValue: number, startValue: number }
+
 
 function App() {
-    const [value, setValue] = useState<number>(0)
 
-    useEffect(() => {
-            const valueFromStorage = localStorage.getItem("counterValue")
-            if (valueFromStorage) {
-                setValue(JSON.parse(valueFromStorage))
-            }
-    }, [])
-    useEffect(() => {
-        localStorage.setItem('counterValue', JSON.stringify(value))
-    }, [value])
-
-    function incValue(): void {
-        setValue(value + 1)
-    }
-    function resetValue(): void {
-        setValue(0)
-    }
 
     return (
         <div className="App">
-            <Counter value={value}
-                     incValue={incValue}
-                     resetValue={resetValue}
-            />
+
+            <Setupper/>
+            <Counter/>
+
         </div>
     );
 }
