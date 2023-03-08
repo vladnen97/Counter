@@ -6,7 +6,7 @@ type PropsType = DefaultButtonPropsType
 
 export const Button: React.FC<PropsType> = (props) => {
     return (
-        <button {...props}/>
+        <button className={'button' + (props.disabled ? ' disabled' : ' default')} {...props}/>
     );
 };
 
