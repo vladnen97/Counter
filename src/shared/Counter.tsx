@@ -1,29 +1,42 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from './Button';
+import {ModeType, SetupType} from '../App';
 
 type PropsType = {
-
+    mode: ModeType
+    localSetup: SetupType
 }
 
-export function Counter({}: PropsType) {
-    const [value, setValue] = useState<number>(0)
+export function Counter(props: PropsType) {
+    const [value, setValue] = useState<number>(props.localSetup.startValue)
+
+    useEffect(() => {
+        setValue(props.localSetup.startValue)
+    }, [props.localSetup])
 
 
     function incValue(): void {
-        setValue(value + 1)
+        (value !== props.localSetup.maxValue) && setValue(value + 1)
     }
     function resetValue(): void {
-        setValue(0)
+        setValue(props.localSetup.startValue)
     }
+
 
     return (
         <div className={'counter'}>
             <div className={'display'}>
-                <h1 className={''}>{value}</h1>
+                {
+                    props.mode === 'view'
+                        ? <h1 className={value === props.localSetup.maxValue ? 'max' : ''}>{value}</h1>
+                        : props.mode === 'edit'
+                            ? <div className={'warning'}>Enter value and press 'set'</div>
+                            : <div className={'error'}>Incorrect value!</div>
+                }
             </div>
             <div className={'buttons'}>
-                <Button className={'button default'} onClick={incValue}>inc</Button>
-                <Button className={'button default'} onClick={resetValue}>reset</Button>
+                <Button onClick={incValue} disabled={props.mode !== 'view' || (value === props.localSetup.maxValue)}>inc</Button>
+                <Button onClick={resetValue} disabled={props.mode !== 'view'}>reset</Button>
             </div>
         </div>
     );
