@@ -6,11 +6,10 @@ type PropsType = {
     setToLocalStorage: (setup: SetupType) => void
     setMode: (value: ModeType) => void
     mode: ModeType
-    localSetup: SetupType
 }
 
 export const Setupper = (props: PropsType) => {
-    const [inputValue, setInputValue] = useState<SetupType>(props.localSetup)
+    const [inputValue, setInputValue] = useState<SetupType>({maxValue: 5, startValue: 0})
 
     useEffect(() => {
         const valuesFromStorage = localStorage.getItem('setup')
@@ -25,7 +24,6 @@ export const Setupper = (props: PropsType) => {
                 props.setMode('error')
             } else {
                 props.setMode('edit')
-
             }
         } else  {
             setInputValue({...inputValue, startValue: +e.currentTarget.value})
@@ -33,7 +31,6 @@ export const Setupper = (props: PropsType) => {
                 props.setMode('error')
             } else {
                 props.setMode('edit')
-
             }
         }
     }
@@ -60,6 +57,6 @@ export const Setupper = (props: PropsType) => {
                         disabled={props.mode !== 'edit'}>set</Button>
             </div>
         </div>
-    );
-};
+    )
+}
 
