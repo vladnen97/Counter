@@ -5,6 +5,7 @@ import {ModeType, SetupType} from '../App';
 type PropsType = {
     mode: ModeType
     localSetup: SetupType
+    setMode: (mode: ModeType) => void
 }
 
 export function Counter(props: PropsType) {
@@ -21,6 +22,9 @@ export function Counter(props: PropsType) {
     function resetValue(): void {
         setValue(props.localSetup.startValue)
     }
+    function changeMode():void {
+        props.setMode('edit')
+    }
 
 
     return (
@@ -35,8 +39,9 @@ export function Counter(props: PropsType) {
                 }
             </div>
             <div className={'buttons'}>
-                <Button onClick={incValue} disabled={props.mode !== 'view' || (value === props.localSetup.maxValue)}>inc</Button>
-                <Button onClick={resetValue} disabled={props.mode !== 'view'}>reset</Button>
+                <Button onClick={incValue} disabled={value === props.localSetup.maxValue}>inc</Button>
+                <Button onClick={resetValue} disabled={value === props.localSetup.startValue}>reset</Button>
+                <Button onClick={changeMode}>set</Button>
             </div>
         </div>
     );
