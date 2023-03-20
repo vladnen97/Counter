@@ -18,21 +18,25 @@ export const Setupper = (props: PropsType) => {
     }, [])
 
 
-    const changeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue({...inputValue, maxValue: +e.currentTarget.value})
-        props.setMode('edit')
+    const changeValueHandler = (e: ChangeEvent<HTMLInputElement>, from: string) => {
+        if (from === 'max') {
+            setInputValue({...inputValue, maxValue: +e.currentTarget.value})
+            if(+e.currentTarget.value <= inputValue.startValue || inputValue.startValue < 0) {
+                props.setMode('error')
+            } else {
+                props.setMode('edit')
 
+            }
+        } else  {
+            setInputValue({...inputValue, startValue: +e.currentTarget.value})
+            if (+e.currentTarget.value >= inputValue.maxValue || +e.currentTarget.value < 0) {
+                props.setMode('error')
+            } else {
+                props.setMode('edit')
+
+            }
+        }
     }
-    const changeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue({...inputValue, startValue: +e.currentTarget.value});
-        props.setMode('edit')
-    }
-
-
-    if (inputValue.maxValue <= inputValue.startValue || inputValue.startValue < 0) {
-        props.setMode('error')
-    }
-
 
 
     return (
@@ -41,13 +45,13 @@ export const Setupper = (props: PropsType) => {
                 <div className={'wrapper'}>
                     <span>max value:</span>
                     <input className={'inputClass' + (inputValue.maxValue <= inputValue.startValue ? ' inputError' : '')} type="number" value={inputValue.maxValue}
-                           onChange={changeMaxValue}/>
+                           onChange={(e) => changeValueHandler(e, 'max')}/>
                 </div>
 
                 <div className={'wrapper'}>
                     <span>start value:</span>
                     <input className={inputValue.maxValue <= inputValue.startValue || inputValue.startValue < 0 ? 'inputClass inputError' : 'inputClass'} type="number" value={inputValue.startValue}
-                           onChange={changeStartValue}/>
+                           onChange={(e) => changeValueHandler(e, 'min')}/>
                 </div>
             </div>
 
