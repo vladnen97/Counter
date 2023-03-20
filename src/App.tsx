@@ -25,8 +25,10 @@ function App() {
     return (
         <div className="App">
 
-            <Setupper setToLocalStorage={setToLocalStorage} setMode={setMode} mode={mode} localSetup={localSetup}/>
-            <Counter mode={mode} localSetup={localSetup}/>
+            {mode !== 'view'
+                ? <Setupper setToLocalStorage={setToLocalStorage} setMode={setMode} mode={mode}/>
+                : <Counter mode={mode} localSetup={localSetup} setMode={setMode}/>
+            }
 
         </div>
     );
