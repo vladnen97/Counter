@@ -1,36 +1,31 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Button} from './Button';
-import {ModeType, SetupType} from '../App';
+import {useDispatch, useSelector} from 'react-redux';
+import {ModeType, setModeAC, setValuesAC} from '../redux/counter-reducer';
+import {RootStateType} from '../redux/store';
 
-type PropsType = {
-    setToLocalStorage: (setup: SetupType) => void
-    setMode: (value: ModeType) => void
-    mode: ModeType
-}
 
-export const Setupper = (props: PropsType) => {
-    const [inputValue, setInputValue] = useState<SetupType>({maxValue: 5, startValue: 0})
 
-    useEffect(() => {
-        const valuesFromStorage = localStorage.getItem('setup')
-        valuesFromStorage && setInputValue(JSON.parse(valuesFromStorage))
-    }, [])
-
+export const Setupper = () => {
+    const [inputValue, setInputValue] = useState<{maxValue: number, startValue: number}>({maxValue: 5, startValue: 0})
+    const mode = useSelector<RootStateType, ModeType>(state => state.counter.mode)
+    const dispatch = useDispatch()
 
     const changeValueHandler = (e: ChangeEvent<HTMLInputElement>, from: string) => {
         if (from === 'max') {
             setInputValue({...inputValue, maxValue: +e.currentTarget.value})
             if(+e.currentTarget.value <= inputValue.startValue || inputValue.startValue < 0) {
-                props.setMode('error')
+                dispatch(setModeAC('error'))
             } else {
-                props.setMode('edit')
+                dispatch(setModeAC('edit'))
+
             }
         } else  {
             setInputValue({...inputValue, startValue: +e.currentTarget.value})
             if (+e.currentTarget.value >= inputValue.maxValue || +e.currentTarget.value < 0) {
-                props.setMode('error')
+                dispatch(setModeAC('error'))
             } else {
-                props.setMode('edit')
+                dispatch(setModeAC('edit'))
             }
         }
     }
@@ -53,8 +48,8 @@ export const Setupper = (props: PropsType) => {
             </div>
 
             <div className={'buttons'}>
-                <Button onClick={() => props.setToLocalStorage(inputValue)}
-                        disabled={props.mode !== 'edit'}>set</Button>
+                <Button onClick={() => dispatch(setValuesAC(inputValue.startValue, inputValue.maxValue))}
+                        disabled={mode !== 'edit'}>set</Button>
             </div>
         </div>
     )
