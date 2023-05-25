@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import {Counter} from './shared/Counter';
-import {Setupper} from './shared/Setupper';
+import {Counter} from './components/Counter';
+import {Setupper} from './components/Setupper';
 
 
 function App() {
