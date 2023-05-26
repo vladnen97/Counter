@@ -7,7 +7,7 @@ const initState = {
     mode: 'view' as ModeType
 }
 
-type InitStateType = typeof initState
+export type InitStateType = typeof initState
 type ActionsType = ReturnType<typeof setValuesAC> | ReturnType<typeof setModeAC>
 
 export const counterReducer = (state: InitStateType = initState, action: ActionsType): InitStateType => {
