@@ -7,7 +7,9 @@ import {RootStateType} from '../redux/store';
 
 
 export const Setupper = () => {
-    const [inputValue, setInputValue] = useState<{maxValue: number, startValue: number}>({maxValue: 5, startValue: 0})
+    const startValue = useSelector<RootStateType, number>(state => state.counter.startValue)
+    const maxValue   = useSelector<RootStateType, number>(state => state.counter.maxValue)
+    const [inputValue, setInputValue] = useState<{maxValue: number, startValue: number}>({maxValue, startValue})
     const mode = useSelector<RootStateType, ModeType>(state => state.counter.mode)
     const dispatch = useDispatch()
 
