@@ -5,6 +5,7 @@ export const loadState = () => {
     if (serializedState) {
         return JSON.parse(serializedState);
     }
+    return {maxValue: 5, startValue: 0}
 }
 
 export const saveState = (state: Omit<InitStateType, 'mode'>) => {
